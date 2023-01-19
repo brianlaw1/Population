@@ -34,6 +34,8 @@ public class Population {
 		run.runPopulation();
 	}
 	
+	/** Runs the program by getting the users selection, and then sorting
+	 * based on the input	*/
 	public void runPopulation()
 	{
 		printIntroduction();
@@ -157,6 +159,8 @@ public class Population {
 		}
 	}
 	
+	/**	Uses FileUtils to read all of the cities' data from a file
+	 */
 	private void readPopulationData()
 	{
 		Scanner read = FileUtils.openToRead(DATA_FILE);
@@ -171,6 +175,12 @@ public class Population {
 		}
 	}
 	
+	/**
+	 * 	Checks whether the user's inputted city is a valid city that exists
+	 * 	
+	 * 	@param city		The user's inputted city
+	 * 	@return			true if it is a valid city, false if not
+	 */
 	public boolean isValidCity(String city)
 	{
 		for (int a = 0; a < cities.size(); a++)
@@ -181,6 +191,12 @@ public class Population {
 		return false;
 	}
 	
+	/**
+	 * 	Checks whether the user's inputted state is a valid city that exists
+	 * 	
+	 * 	@param state	The user's inputted state
+	 * 	@return			true if it is a valid state, false if not
+	 */
 	public boolean isValidState(String state)
 	{
 		for (int a = 0; a < cities.size(); a++)
@@ -191,6 +207,11 @@ public class Population {
 		return false;
 	}
 	
+	/**
+	 * 	Gets all the cities with the same name, chosen by the user
+	 * 
+	 * 	@param city		The user's chosen city name
+	 */
 	private void getAllCities(String city)
 	{
 		sortDescendingPopulation();
@@ -201,6 +222,11 @@ public class Population {
 		}
 	}
 	
+	/**
+	 * 	Sorts the cities within a state chosen by the user
+	 * 
+	 * 	@param state	The user's chosen state
+	 */
 	private void sortStatePopulation(String state)
 	{
 		sortDescendingPopulation();
@@ -211,6 +237,9 @@ public class Population {
 		}
 	}
 	
+	/**
+	 * 	Sorts all cities ascending by population by using selection sort
+	 */
 	private void sortAscendingPopulation()
 	{
 		for (int a = cities.size(); a > 1; a--)
@@ -228,6 +257,10 @@ public class Population {
 		}
 	}
 	
+	/**
+	 * 	Calls helper methods to sort all cities descending by population by 
+	 * 	using merge sort
+	 */
 	private void sortDescendingPopulation()
 	{
 		int n = cities.size();
@@ -236,6 +269,12 @@ public class Population {
 		recursiveSortPopulation(0, n-1);
 	}
 	
+	/**
+	 * 	A recursive method that continues to split the list into lists that are to be sorted
+	 * 
+	 * 	@param from		The starting index to be sorted
+	 * 	@param to		The ending index to be sorted
+	 */
 	private void recursiveSortPopulation(int from, int to)
 	{
 		if (to - from < 2)
@@ -260,6 +299,13 @@ public class Population {
 		}
 	}
 	
+	/**
+	 * 	Merges 2 array lists that have been sorted
+	 * 	
+	 *  @param from		The starting index of the list that has been sorted
+	 * 	@param middle	The middle index of the list that has been sorted
+	 * 	@param to		The end index of the list that has been sorted
+	 */
 	private void mergePopulation(int from, int middle, int to)
 	{
 		int i = from;
@@ -302,6 +348,9 @@ public class Population {
 		}
 	}
 	
+	/**
+	 * 	Sorts all cities ascending by name alphabetically by using insertion sort
+	 */
 	private void sortAscendingName()
 	{
 		for (int n = 1; n < cities.size(); n++)
@@ -319,6 +368,10 @@ public class Population {
 		}
 	}
 	
+	/**
+	 * 	Calls helper methods to sort all cities descending by name alphabetically by 
+	 * 	using merge sort
+	 */
 	private void sortDescendingName()
 	{
 		int n = cities.size();
@@ -326,6 +379,12 @@ public class Population {
 		recursiveSortName(0, n-1);
 	}
 	
+	/**
+	 * 	A recursive method that continues to split the list into lists that are to be sorted
+	 * 
+	 * 	@param from		The starting index to be sorted
+	 * 	@param to		The ending index to be sorted
+	 */
 	private void recursiveSortName(int from, int to)
 	{
 		if (to - from < 2)
@@ -346,6 +405,13 @@ public class Population {
 		}
 	}
 	
+	/**
+	 * 	Merges 2 array lists that have been sorted
+	 * 	
+	 *  @param from		The starting index of the list that has been sorted
+	 * 	@param middle	The middle index of the list that has been sorted
+	 * 	@param to		The end index of the list that has been sorted
+	 */
 	private void mergeName(int from, int middle, int to)
 	{
 		int i = from;
