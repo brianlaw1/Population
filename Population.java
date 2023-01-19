@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -15,6 +16,7 @@ public class Population {
 	private List<City> cities;
 	private List<City> temp;
 	private List<City> stateCities;
+	private List<City> sameNameCities;
 	
 	// US data file
 	private final String DATA_FILE = "usPopData2017.txt";
@@ -33,6 +35,7 @@ public class Population {
 	public void runPopulation()
 	{
 		printIntroduction();
+		readPopulationData();
 		int selection = 0;
 		while (selection != 9)
 		{
@@ -43,14 +46,13 @@ public class Population {
 			{
 				sortAscendingPopulation();
 				long endMillisec = System.currentTimeMillis();
-				totalMillisec = endMillisec - startMillisec;
+				long totalMillisec = endMillisec - startMillisec;
 				System.out.println("\nFifty least populous cities");
-				System.out.printf("%-22s %-22s %-12s %,12d", "State", "Name", "Type",
-						"population");
+				//System.out.printf("%-22s %-22s %-12s %,12s", "State", "Name", "Type", "population");
 				
 				for (int i = 0; i < 50; i++)
 				{
-					System.out.printf("%3s",i + ":");
+					System.out.printf("%3s",i+1 + ":");
 					System.out.println(cities.get(i).toString());
 				}
 				System.out.println("\nElapsed Time " + totalMillisec + " millliseconds");
@@ -59,14 +61,14 @@ public class Population {
 			{
 				sortDescendingPopulation();
 				long endMillisec = System.currentTimeMillis();
-				totalMillisec = endMillisec - startMillisec;
+				long totalMillisec = endMillisec - startMillisec;
 				System.out.println("\nFifty most populous cities");
-				System.out.printf("%-22s %-22s %-12s %,12d", "State", "Name", "Type",
-						"population");
+		//		System.out.printf("%-22s %-22s %-12s %,12s", "State", "Name", "Type",
+		//				"population");
 				
 				for (int i = 0; i < 50; i++)
 				{
-					System.out.printf("%3s",i + ":");
+					System.out.printf("%3s",i+1 + ":");
 					System.out.println(cities.get(i).toString());
 				}
 				System.out.println("\nElapsed Time " + totalMillisec + " millliseconds");
@@ -75,14 +77,14 @@ public class Population {
 			{
 				sortAscendingName();
 				long endMillisec = System.currentTimeMillis();
-				totalMillisec = endMillisec - startMillisec;
+				long totalMillisec = endMillisec - startMillisec;
 				System.out.println("\nFifty cities sorted by name");
-				System.out.printf("%-22s %-22s %-12s %,12d", "State", "Name", "Type",
-						"population");
+				//System.out.printf("%-22s %-22s %-12s %,12s", "State", "Name", "Type",
+				//		"population");
 				
 				for (int i = 0; i < 50; i++)
 				{
-					System.out.printf("%3s",i + ":");
+					System.out.printf("%3s",i+1 + ":");
 					System.out.println(cities.get(i).toString());
 				}
 				System.out.println("\nElapsed Time " + totalMillisec + " millliseconds");
@@ -91,14 +93,14 @@ public class Population {
 			{
 				sortDescendingName();
 				long endMillisec = System.currentTimeMillis();
-				totalMillisec = endMillisec - startMillisec;
+				long totalMillisec = endMillisec - startMillisec;
 				System.out.println("\nFifty cities sorted by name descending");
-				System.out.printf("%-22s %-22s %-12s %,12d", "State", "Name", "Type",
-						"population");
+			//	System.out.printf("%-22s %-22s %-12s %,12s", "State", "Name", "Type",
+			//			"population");
 				
 				for (int i = 0; i < 50; i++)
 				{
-					System.out.printf("%3s",i + ":");
+					System.out.printf("%3s",i+1 + ":");
 					System.out.println(cities.get(i).toString());
 				}
 				System.out.println("\nElapsed Time " + totalMillisec + " millliseconds");
@@ -108,16 +110,20 @@ public class Population {
 				String state = "s";
 				while (!isValidState(state))
 				{
-					state = Prompt.getString("Enter state name (ie. Alabama)")
+					state = Prompt.getString("Enter state name (ie. Alabama)");
 				}
 				startMillisec = System.currentTimeMillis();
-				sortStatePopulation();
+				sortStatePopulation(state);
 				long endMillisec = System.currentTimeMillis();
-				totalMillisec = endMillisec - startMillisec;
+				long totalMillisec = endMillisec - startMillisec;
+				
+				System.out.println("Fifty most populous cities in " + state);
+			//	System.out.printf("%-22s %-22s %-12s %,12s", "State", "Name", "Type",
+			//			"population");
 				
 				for (int i = 0; i < 50; i++)
 				{
-					System.out.printf("%3s",i + ":");
+					System.out.printf("%3s",i+1 + ":");
 					System.out.println(stateCities.get(i).toString());
 				}
 				System.out.println("\nElapsed Time " + totalMillisec + " millliseconds");
@@ -126,10 +132,25 @@ public class Population {
 			else if (selection == 6)
 			{
 				String city = "c";
-				while(!isValidCity(city))
+				while (!isValidCity(city))
 				{
 					city = Prompt.getString("Enter city name");
 				}
+				startMillisec = System.currentTimeMillis();
+				getAllCities(city);
+				long endMillisec = System.currentTimeMillis();
+				long  totalMillisec = endMillisec - startMillisec;
+				
+				System.out.println("City " + city + " by population");
+		//		System.out.printf("%-22s %-22s %-12s %,12s", "State", "Name", "Type",
+		//				"population");
+				
+				for (int i = 0; i < sameNameCities.size(); i++)
+				{
+					System.out.printf("%3s",i+1 + ":");
+					System.out.println(sameNameCities.get(i).toString());
+				}
+				System.out.println("\nElapsed Time " + totalMillisec + " millliseconds");
 			}
 		}
 	}
@@ -138,7 +159,7 @@ public class Population {
 	{
 		Scanner read = FileUtils.openToRead(DATA_FILE);
 		read.useDelimiter("[\t\n]");
-		while (read.hasNextLine())
+		while (read.hasNext())
 		{
 			String state = read.next();
 			String name = read.next();
@@ -171,19 +192,20 @@ public class Population {
 	private void getAllCities(String city)
 	{
 		sortDescendingPopulation();
-		while (int i = 0; i < cities.size(); i++)
+		for (int i = 0; i < cities.size(); i++)
 		{
-			if (cities.get(i)
+			if (city.equals(cities.get(i).getState()))
+				sameNameCities.add(cities.get(i));
 		}
 	}
 	
 	private void sortStatePopulation(String state)
 	{
 		sortDescendingPopulation();
-		while (int i = 0; i < cities.size(); i++)
+		for (int i = 0; i < cities.size(); i++)
 		{
-			if (cities.get(i).getState().equals(state))
-				stateCities.add(0, tempCity);
+			if (state.equals(cities.get(i).getState()))
+				stateCities.add(cities.get(i));
 		}
 	}
 	
@@ -207,8 +229,9 @@ public class Population {
 	private void sortDescendingPopulation()
 	{
 		int n = cities.size();
+		//System.out.println(cities.size());
 		temp = new ArrayList<City>();
-		recursiveSort(0, n-1);
+		recursiveSortPopulation(0, n-1);
 	}
 	
 	private void recursiveSortPopulation(int from, int to)
@@ -225,9 +248,13 @@ public class Population {
 		else
 		{
 			int middle = (from + to)/2;
-			recursiveSort(from, middle);
-			recursiveSort(middle + 1 ,to);
-			merge(from, middle, to);
+			if (middle != 0)
+			{
+				//System.out.println(from + " " + middle + " " + to);
+				recursiveSortPopulation(from, middle);
+				recursiveSortPopulation(middle + 1 ,to);
+				mergePopulation(from, middle, to);
+			}
 		}
 	}
 	
@@ -249,7 +276,7 @@ public class Population {
 				temp.set(k, cities.get(j));
 				j++;
 			}
-			k++
+			k++;
 		}
 		
 		while (i <= middle)
@@ -279,7 +306,7 @@ public class Population {
 			City tempCity = cities.get(n);
 			
 			int i = n;
-			while (i > 0 && tempCity.compareTo(cities.get(i-1)) < 0)
+			while (i > 0 && tempCity.getName().compareTo(cities.get(i-1).getName()) < 0)
 			{
 				cities.set(i, cities.get(i-1));
 				i--;
@@ -293,14 +320,14 @@ public class Population {
 	{
 		int n = cities.size();
 		temp = new ArrayList<City>();
-		recursiveSort(0, n-1);
+		recursiveSortName(0, n-1);
 	}
 	
 	private void recursiveSortName(int from, int to)
 	{
 		if (to - from < 2)
 		{
-			if (to > from && cities.get(to).getName() < cities.get(from).getName())
+			if (to > from && cities.get(to).getName().compareTo(cities.get(from).getName())<0)
 			{
 				City cityTemp = cities.get(to);
 				cities.set(to, cities.get(from));
@@ -310,9 +337,9 @@ public class Population {
 		else
 		{
 			int middle = (from + to)/2;
-			recursiveSort(from, middle);
-			recursiveSort(middle + 1 ,to);
-			merge(from, middle, to);
+			recursiveSortName(from, middle);
+			recursiveSortName(middle + 1 ,to);
+			mergeName(from, middle, to);
 		}
 	}
 	
@@ -324,7 +351,7 @@ public class Population {
 		
 		while (i <= middle && j <= to)
 		{
-			if (cities.get(i).getName() > cities.get(j).getName())
+			if (cities.get(i).getName().compareTo(cities.get(j).getName())>0)
 			{
 				temp.set(k, cities.get(i));
 				i++;
@@ -334,7 +361,7 @@ public class Population {
 				temp.set(k, cities.get(j));
 				j++;
 			}
-			k++
+			k++;
 		}
 		
 		while (i <= middle)
