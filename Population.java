@@ -24,6 +24,8 @@ public class Population {
 	public Population()
 	{
 		cities = new ArrayList<City>();
+		sameNameCities = new ArrayList<City>();
+		stateCities = new ArrayList<City>();
 	}
 	
 	public static void main(String[]args)
@@ -194,7 +196,7 @@ public class Population {
 		sortDescendingPopulation();
 		for (int i = 0; i < cities.size(); i++)
 		{
-			if (city.equals(cities.get(i).getState()))
+			if (city.equals(cities.get(i).getName()))
 				sameNameCities.add(cities.get(i));
 		}
 	}
@@ -238,7 +240,7 @@ public class Population {
 	{
 		if (to - from < 2)
 		{
-			if (to > from && cities.get(to).getPopulation() < cities.get(from).getPopulation())
+			if (to > from && cities.get(to).getPopulation() > cities.get(from).getPopulation())
 			{
 				City cityTemp = cities.get(to);
 				cities.set(to, cities.get(from));
@@ -268,12 +270,13 @@ public class Population {
 		{
 			if (cities.get(i).getPopulation() > cities.get(j).getPopulation())
 			{
-				temp.set(k, cities.get(i));
+				temp.add(k, cities.get(i));
 				i++;
 			}
 			else
 			{
-				temp.set(k, cities.get(j));
+				//System.out.println(i + " " + j + " " + k);
+				temp.add(k, cities.get(j));
 				j++;
 			}
 			k++;
@@ -281,14 +284,14 @@ public class Population {
 		
 		while (i <= middle)
 		{
-			temp.set(k, cities.get(i));
+			temp.add(k, cities.get(i));
 			k++;
 			i++;
 		}
 		
 		while (j <= to)
 		{
-			temp.set(k, cities.get(j));
+			temp.add(k, cities.get(j));
 			k++;
 			j++;
 		}
@@ -327,7 +330,7 @@ public class Population {
 	{
 		if (to - from < 2)
 		{
-			if (to > from && cities.get(to).getName().compareTo(cities.get(from).getName())<0)
+			if (to > from && cities.get(to).getName().compareTo(cities.get(from).getName())>0)
 			{
 				City cityTemp = cities.get(to);
 				cities.set(to, cities.get(from));
@@ -353,12 +356,12 @@ public class Population {
 		{
 			if (cities.get(i).getName().compareTo(cities.get(j).getName())>0)
 			{
-				temp.set(k, cities.get(i));
+				temp.add(k, cities.get(i));
 				i++;
 			}
 			else
 			{
-				temp.set(k, cities.get(j));
+				temp.add(k, cities.get(j));
 				j++;
 			}
 			k++;
@@ -366,14 +369,14 @@ public class Population {
 		
 		while (i <= middle)
 		{
-			temp.set(k, cities.get(i));
+			temp.add(k, cities.get(i));
 			k++;
 			i++;
 		}
 		
 		while (j <= to)
 		{
-			temp.set(k, cities.get(j));
+			temp.add(k, cities.get(j));
 			k++;
 			j++;
 		}
